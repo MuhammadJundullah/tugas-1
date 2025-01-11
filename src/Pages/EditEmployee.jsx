@@ -4,34 +4,37 @@ import { useNavigate, useParams } from "react-router-dom";
 const EditEmployee = () => {
   const navigate = useNavigate();
   const { index } = useParams(); // Ambil index dari URL
-  const items = JSON.parse(localStorage.getItem("items")) || []; // Ambil data items dari localStorage
+  const [items, setItems] = useState([]); // State untuk menyimpan semua data employees
+  const [name, setName] = useState(""); // State untuk name
+  const [division, setDivision] = useState(""); // State untuk division
 
-  // Set initial state untuk name dan division
-  const [name, setName] = useState("");
-  const [division, setDivision] = useState("");
-
-  // Cek apakah index valid dan data ada di localStorage
+  // Ambil data items dari localStorage pada awal render
   useEffect(() => {
-    if (index !== undefined) {
-      const employee = items[parseInt(index)];
+    const storedItems = JSON.parse(localStorage.getItem("items")) || [];
+    setItems(storedItems);
+
+    if (index !== undefined && !isNaN(parseInt(index))) {
+      const employee = storedItems[parseInt(index)];
       if (employee) {
-        setName(employee.name); // Set name
-        setDivision(employee.division); // Set division
+        setName(employee.name); // Set state name dari data yang ditemukan
+        setDivision(employee.division); // Set state division dari data yang ditemukan
       } else {
         alert("Employee not found!");
-        navigate("/"); // Redirect ke halaman utama jika data tidak ditemukan
+        navigate("/"); // Redirect jika data tidak ditemukan
       }
     } else {
-      navigate("/"); // Redirect ke halaman utama jika index tidak valid
+      navigate("/"); // Redirect jika index tidak valid
     }
-  }, [index, items, navigate]);
+  }, [index, navigate]);
 
-  // Fungsi untuk menangani perubahan data input
+  // Fungsi untuk menangani pembaruan data
   const handleUpdate = () => {
     const updatedEmployee = { name, division };
-    items[parseInt(index)] = updatedEmployee; // Update data pada index yang sesuai
-    localStorage.setItem("items", JSON.stringify(items)); // Simpan kembali ke localStorage
-    navigate("/"); // Redirect kembali ke halaman utama
+    const updatedItems = [...items];
+    updatedItems[parseInt(index)] = updatedEmployee; // Update data pada index yang sesuai
+    localStorage.setItem("items", JSON.stringify(updatedItems)); // Simpan kembali ke localStorage
+    setItems(updatedItems); // Perbarui state items
+    navigate("/"); // Redirect ke halaman utama
   };
 
   return (
@@ -46,8 +49,8 @@ const EditEmployee = () => {
           type="text"
           id="name"
           className="p-2 w-full border border-gray-300 dark:border-gray-600 rounded mb-4 bg-white dark:bg-gray-800 text-black dark:text-white"
-          value={name} // Binding value ke state name
-          onChange={(e) => setName(e.target.value)} // Update state name saat input berubah
+          value={name} // Terikat ke state name
+          onChange={(e) => setName(e.target.value)} // Perbarui state name saat input berubah
         />
       </div>
 
@@ -59,8 +62,8 @@ const EditEmployee = () => {
           type="text"
           id="division"
           className="p-2 w-full border border-gray-300 dark:border-gray-600 rounded mb-4 bg-white dark:bg-gray-800 text-black dark:text-white"
-          value={division} // Binding value ke state division
-          onChange={(e) => setDivision(e.target.value)} // Update state division saat input berubah
+          value={division} // Terikat ke state division
+          onChange={(e) => setDivision(e.target.value)} // Perbarui state division saat input berubah
         />
       </div>
 
