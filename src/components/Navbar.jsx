@@ -76,6 +76,7 @@ const Navbar = ({ setTheme }) => {
             🖥️
           </button>
         </div>
+
         {/* Dropdown for Logout */}
         <div className="relative">
           <button
@@ -99,6 +100,14 @@ const Navbar = ({ setTheme }) => {
 
           {dropdownOpen && (
             <div className="absolute right-0 mt-2 bg-white dark:bg-gray-700 shadow-lg rounded-lg w-40">
+              {/* Link Edit Username */}
+              <Link
+                to="/edit-username"
+                className="block w-full px-4 py-2 text-left text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
+                Edit Username
+              </Link>
+
+              {/* Logout */}
               <button
                 onClick={handleLogout}
                 className="block w-full px-4 py-2 text-left text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">

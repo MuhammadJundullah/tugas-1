@@ -5,6 +5,7 @@ import LoginPage from "./Pages/LoginPage";
 import HomePage from "./Pages/HomePage";
 import AddEmployee from "./Pages/AddEmployee";
 import EditEmployee from "./Pages/EditEmployee";
+import EditUsername from "./Pages/EditUsername"; // Import halaman EditUsername
 import PrivateRoute from "./components/PrivateRoute"; // Gunakan PrivateRoute untuk proteksi halaman
 
 const App = () => {
@@ -51,6 +52,14 @@ const App = () => {
             element={
               <PrivateRoute>
                 <EditEmployee />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/edit-username"
+            element={
+              <PrivateRoute>
+                <EditUsername />
               </PrivateRoute>
             }
           />
