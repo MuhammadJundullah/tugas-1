@@ -19,11 +19,11 @@ const EditUsername = () => {
 
   return (
     <div className="p-8 bg-white dark:bg-gray-900 text-black dark:text-white h-screen">
-      <h2 className="text-2xl font-semibold mb-4">Edit Username</h2>
+      <h2 className="text-2xl font-semibold mb-4">Edit nama user</h2>
 
       <div className="mb-4">
         <label htmlFor="username" className="block text-lg mb-2">
-          New Username:
+          Masukkan nama lengkap :
         </label>
         <input
           type="text"
